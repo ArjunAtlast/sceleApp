@@ -1,0 +1,71 @@
+<!--
+  Profile Page
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <div *ngIf="user">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <!-- Profile Details -->
+      <div class="profile-details">
+        <!-- Profile Bio -->
+        <div class="profile-bio">
+          <!-- Profile Image -->
+          <div class="profile-image">
+            <div class="profile-image-wrapper">
+              <img *ngIf="!user.photoURL" src="assets/images/avatar_man.svg">
+              <img *ngIf="user.photoURL" [src]="user.photoURL">
+            </div>
+
+            <!-- Edit button -->
+            <button (click)="editProfile()" ion-fab color="secondary" class="btn-float-right" mini>
+              <ion-icon ios="ios-build-outline" md="md-create"></ion-icon>
+            </button>
+
+          </div>
+          <div class="profile-identity">
+            <h3>{{user.name}}</h3>
+            <h4>{{user.email}}</h4>
+          </div>
+        </div>
+        <!-- Profile Status -->
+        <div class="profile-status">
+          <div class="profile-status-item">
+            <div ion-text color="info" class="profile-status-item-value">
+              150
+            </div>
+            <div class="profile-status-item-text">Subscribers</div>
+          </div>
+          <div class="profile-status-item">
+            <div ion-text color="success" class="profile-status-item-value">
+              25
+            </div>
+            <div class="profile-status-item-text">Events</div>
+          </div>
+          <div class="profile-status-item">
+            <div ion-text color="warning" class="profile-status-item-value">
+              3
+            </div>
+            <div class="profile-status-item-text">Prizes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preloader -->
+  <div class="preloader" *ngIf="!user">
+    <div class="loading">
+      <img src="assets/images/loader.svg" />
+    </div>
+  </div>
+</ion-content>

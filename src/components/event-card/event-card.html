@@ -1,0 +1,57 @@
+<div class="event-card" *ngIf="event && detail">
+  <!-- Event Header -->
+  <div class="event-header">
+    <!-- Photo -->
+    <div class="event-owner-photo">
+      <div class="event-owner-photo-wrapper">
+        <img [src]="detail.photoURL"/>
+      </div>
+    </div>
+    <!-- Owner -->
+    <div class="event-owner">
+      <div class="event-owner-name">{{detail.name}}</div>
+    </div>
+    <!--created date-->
+    <div class="event-created-at">
+      <div class="event-created-at-wrapper">{{event.createdAt | date:'MMM d, yyyy'}}</div>
+    </div>
+  </div>
+  <!-- State -->
+  <div class="event-state" [ngClass]="event.state">
+    {{event.state }}
+  </div>
+  <!-- Poster -->
+  <div class="event-poster">
+    <!-- Poster -->
+    <div  class="event-poster-image">
+      <img [src]="event.posterURL || 'assets/images/default_poster.jpg'">
+    </div>
+    <!-- Title and tagline -->
+    <div class="event-poster-text">
+      <div class="event-poster-text-title">{{event.title}}</div>
+      <div *ngIf="event.tagline" class="event-poster-text-tagline">{{event.tagline}}</div>
+    </div>
+  </div>
+  <!-- Content -->
+  <div class="event-content">
+    <!-- Date and Time -->
+    <div class="event-date-place">
+      <div class="event-place">
+        at {{ event.place }}
+      </div>
+      <div class="event-date">
+        on {{event.startDate | date:'MMM d, yyyy - EEEE'}}
+      </div>
+    </div>
+
+  </div>
+  <!-- footer -->
+  <div class="event-footer">
+    <div class="event-interests">21 interested</div>
+    <div class="event-actions">
+      <button ion-button icon-only small clear>
+        <ion-icon color="default" name="heart"></ion-icon>
+      </button>
+    </div>
+  </div>
+</div>

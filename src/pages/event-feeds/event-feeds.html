@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Event Feeds
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <div *ngFor="let event of events">
+    <event-card [event]="event"></event-card>
+  </div>
+</ion-content>

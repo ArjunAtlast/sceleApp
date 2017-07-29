@@ -1,0 +1,59 @@
+<!--
+  Edit Profile Page
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Edit Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <div *ngIf="user">
+    <div class="profile-card">
+      <div class="profile-bio">
+        <div class="profile-image">
+          <div class="profile-image-wrapper">
+            <img [src]="profile.photoURL">
+          </div>
+          <!-- Gallery button -->
+          <button (click)="browsePicture()" ion-fab color="danger" class="btn-float-right" mini>
+            <ion-icon name="images"></ion-icon>
+          </button>
+          <button (click)="takePicture()" ion-fab color="warning" class="btn-float-left" mini>
+            <ion-icon name="camera"></ion-icon>
+          </button>
+        </div>
+      </div>
+      <form class="app-form" [formGroup]="profileForm">
+        <ion-row>
+          <ion-col>
+            <ion-list no-lines>
+              <ion-list-header>
+                General Details
+              </ion-list-header>
+
+              <ion-item [class.invalid]="showError(profileForm.controls.name)">
+                <ion-label>
+                  <ion-icon item-left name="person"></ion-icon>
+                </ion-label>
+                <ion-input clearOnEdit="true" [(ngModel)]="profile.name" formControlName="name" placeholder="Name"></ion-input>
+              </ion-item>
+
+              <!-- Name Error Text -->
+              <ion-item class="error-text" *ngIf="showError(profileForm.controls.name)">
+                <p> * Invalid Name</p>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </form>
+    </div>
+  </div>
+  <ion-fab right bottom>
+    <button (click)="confirmEdit()" ion-fab [disabled]="!profileForm.valid">
+      <ion-icon name="done-all"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

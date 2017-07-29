@@ -1,0 +1,70 @@
+<!--
+  Login Page
+-->
+
+<ion-content>
+  <div class="app-content-header">
+    <h4 class="app-clear-title" icon-left>
+      <ion-icon name="ios-log-in"></ion-icon>
+      Login
+    </h4>
+  </div>
+  <div class="login-content">
+    <form class="app-form" [formGroup]="loginForm">
+      <ion-row>
+        <ion-col>
+          <ion-list no-lines>
+            <ion-item [class.invalid]="showError(loginForm.controls.email)">
+              <ion-label>
+                <ion-icon item-left name="mail"></ion-icon>
+              </ion-label>
+              <ion-input [(ngModel)]="loginEmail" formControlName="email" placeholder="Email"></ion-input>
+            </ion-item>
+
+            <!-- Email Error Text -->
+            <ion-item class="error-text" *ngIf="showError(loginForm.controls.email)">
+              <p> * Invalid Email</p>
+            </ion-item>
+
+            <ion-item [class.invalid]="showError(loginForm.controls.password)">
+              <ion-label>
+                <ion-icon name="key" item-left></ion-icon>
+              </ion-label>
+              <ion-input [(ngModel)]="loginPassword" type="password" formControlName="password" placeholder="Password"></ion-input>
+            </ion-item>
+
+            <!-- Password Error Text -->
+            <ion-item class="error-text" *ngIf="showError(loginForm.controls.password)">
+              <p> * Password cannot be empty</p>
+            </ion-item>
+
+            <!--Forgot Password-->
+            <ion-item style="text-align: right; cursor">
+              <ion-buttons end>
+                <button type="button" (click)="forgotPwd()" ion-button small clear color="info" >Forgot Password?</button>
+              </ion-buttons>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="text-align: center">
+          <button (click)="login()" type="submit" ion-button icon-end block color="secondary" [disabled]="!loginForm.valid">
+            Login
+            <ion-icon name="ios-log-in"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button icon-left (click)="createAccount()" type="button" ion-button clear block color="light">
+            <ion-icon name="person-add"></ion-icon>
+            Create Account
+          </button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
+</ion-content>

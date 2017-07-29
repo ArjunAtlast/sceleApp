@@ -1,0 +1,30 @@
+page-menu {
+  ion-menu {
+    .user-profile {
+      &.list-ios > .item-block:last-child, &.list-ios > .item-wrapper:last-child .item-block {
+        border: none !important;
+      }
+      margin: 0;
+      ion-item {
+        background: transparent !important;
+        color: color($colors, light);
+        ion-avatar img{
+          background: color($colors, light);
+        }
+      }
+    }
+
+    .menu-list {
+      [ion-item] {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: rgba(0,0,0,0.87);
+        ion-icon {
+          color: rgba(0,0,0,0.54);
+          font-size: 20px;
+          min-height: 20px;
+        }
+      }
+    }
+  }
+}

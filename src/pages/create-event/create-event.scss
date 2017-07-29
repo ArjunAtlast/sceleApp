@@ -1,0 +1,20 @@
+page-create-event {
+  &>ion-content {
+    background-color: color($colors, light);
+  }
+  .create-event-form {
+    @include custom-card(#FFFFFF);
+    padding: 0;
+  }
+  .inline-item-wrapper {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+
+    ion-item {
+      width: 0px;
+      flex: 1;
+    }
+  }
+}

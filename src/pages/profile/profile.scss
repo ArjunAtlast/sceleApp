@@ -1,0 +1,10 @@
+page-profile {
+  background-image: url('../assets/images/music_art_bg.jpg');
+  background-size: cover;
+  background-position: right;
+  & > ion-content {
+    @include overlayGradient(-45deg, 0.7, 0.3);
+    background-color: transparent !important;
+  }
+
+}

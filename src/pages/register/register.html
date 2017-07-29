@@ -1,0 +1,208 @@
+<ion-header no-border>
+    <ion-buttons start>
+      <button (click)="goBack()" ion-button clear icon-left small color="light">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+</ion-header>
+
+<ion-content>
+  <div class="register-content">
+    <ion-slides #registerSlider class="scrollable-slide">
+      <ion-slide>
+        <form class="app-form" [formGroup]="registerForm">
+          <ion-row>
+            <ion-col>
+              <ion-list no-lines>
+
+                <ion-item [class.invalid]="showError(registerForm.controls.name)">
+                  <ion-label>
+                    <ion-icon item-left name="person"></ion-icon>
+                  </ion-label>
+                  <ion-input [(ngModel)]="registerName" formControlName="name" placeholder="Name"></ion-input>
+                </ion-item>
+
+                <!-- Name Error Text -->
+                <ion-item class="error-text" *ngIf="showError(registerForm.controls.name)">
+                  <p> * Invalid Name</p>
+                </ion-item>
+
+                <ion-item [class.invalid]="showError(registerForm.controls.email)">
+                  <ion-label>
+                    <ion-icon item-left name="mail"></ion-icon>
+                  </ion-label>
+                  <ion-input [(ngModel)]="registerEmail" formControlName="email" placeholder="Email"></ion-input>
+                </ion-item>
+
+                <!-- Email Error Text -->
+                <ion-item class="error-text" *ngIf="showError(registerForm.controls.email)">
+                  <p> * Invalid Email</p>
+                </ion-item>
+
+                <ion-item [class.invalid]="showError(registerForm.controls.password)">
+                  <ion-label>
+                    <ion-icon name="key" item-left></ion-icon>
+                  </ion-label>
+                  <ion-input [(ngModel)]="registerPassword" [type]="showPassword?'text':'password'" formControlName="password" placeholder="Password"></ion-input>
+                  <button (click)="togglePasswordVisibility()" ion-button small clear item-right icon-only color="dark">
+                    <ion-icon [name]="showPassword?'eye-off':'eye'"></ion-icon>
+                  </button>
+                </ion-item>
+
+                <!-- Password Error Text -->
+                <ion-item class="error-text" *ngIf="showError(registerForm.controls.password)">
+                  <p> * Password should have atleast 8 characters</p>
+                </ion-item>
+              </ion-list>
+
+              <!-- Gender Input Buttons -->
+              <ion-list no-lines>
+                <ion-list-header>
+                  Gender
+                </ion-list-header>
+                <ion-item class="item-gender">
+
+                  <button [class.active]="registerGender==='male'" (click)="setGenderMale()" ion-button clear small icon-left>
+                    <ion-icon name="male"></ion-icon>
+                    Male
+                  </button>
+                  <button [class.active]="registerGender==='female'" (click)="setGenderFemale()" ion-button clear small icon-left>
+                    <ion-icon name="female"></ion-icon>
+                    Female
+                  </button>
+
+                </ion-item>
+              </ion-list>
+
+            </ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <button (click)="nextPage()" ion-button icon-end block color="secondary" [disabled]="!registerForm.valid">
+                Next <ion-icon name="arrow-forward"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-slide>
+      <ion-slide>
+        <div class="app-form">
+          <ion-row>
+            <ion-col>
+              <!-- Skills Input -->
+              <ion-list no-lines *ngIf="slideTwoActive">
+                <ion-list-header>
+                  Select Your Skills
+                </ion-list-header>
+                <!-- Art -->
+                <ion-item-group>
+                  <ion-item-divider color="dark">
+                    <ion-icon item-left name="color-palette"></ion-icon>
+                    Art
+                  </ion-item-divider>
+                  <!-- Music -->
+                  <ion-item>
+                    <ion-label>Music</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.music"></ion-checkbox>
+                  </ion-item>
+                  <!-- Dance -->
+                  <ion-item>
+                    <ion-label>Dance</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.dance"></ion-checkbox>
+                  </ion-item>
+                  <!-- Acting -->
+                  <ion-item>
+                    <ion-label>Acting</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.acting"></ion-checkbox>
+                  </ion-item>
+                  <!-- Drawing -->
+                  <ion-item>
+                    <ion-label>Drawing</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.drawing"></ion-checkbox>
+                  </ion-item>
+                  <!-- Literature -->
+                  <ion-item>
+                    <ion-label>Literature</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.literature"></ion-checkbox>
+                  </ion-item>
+                </ion-item-group>
+
+                <!-- Sport -->
+                <ion-item-group>
+                  <ion-item-divider color="dark">
+                    <ion-icon item-left name="football"></ion-icon>
+                    Sport
+                  </ion-item-divider>
+                  <!-- Athletics -->
+                  <ion-item>
+                    <ion-label>Athletics</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.athletics"></ion-checkbox>
+                  </ion-item>
+
+                  <!-- Games -->
+                  <ion-item>
+                    <ion-label>Games</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.games"></ion-checkbox>
+                  </ion-item>
+
+                  <!-- Endurance -->
+                  <ion-item>
+                    <ion-label>Strength / Endurance</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.endurance"></ion-checkbox>
+                  </ion-item>
+
+                  <!-- Coordination -->
+                  <ion-item>
+                    <ion-label>Balance &amp; Coordination</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.coordination"></ion-checkbox>
+                  </ion-item>
+
+                </ion-item-group>
+
+                <!-- Technical -->
+                <ion-item-group>
+                  <ion-item-divider color="dark">
+                    <ion-icon item-left name="code"></ion-icon>
+                    Technical
+                  </ion-item-divider>
+                  <!-- Designing -->
+                  <ion-item>
+                    <ion-label>Designing</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.designing"></ion-checkbox>
+                  </ion-item>
+                  <!-- Programmisng -->
+                  <ion-item>
+                    <ion-label>Programming</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.programming"></ion-checkbox>
+                  </ion-item>
+                  <!-- Data Analysis -->
+                  <ion-item>
+                    <ion-label>Data Analysis</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.data_analysis"></ion-checkbox>
+                  </ion-item>
+                  <!-- Technical Writing -->
+                  <ion-item>
+                    <ion-label>Technical Writing</ion-label>
+                    <ion-checkbox [(ngModel)]="registerSkills.technical_writing"></ion-checkbox>
+                  </ion-item>
+                </ion-item-group>
+
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="text-align: center">
+              <button (click)="register()" type="submit" ion-button icon-end block color="secondary" [disabled]="!registerForm.valid">
+                Register
+                <ion-icon name="md-checkmark-circle-outline"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+  </div>
+
+</ion-content>

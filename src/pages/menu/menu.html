@@ -1,0 +1,47 @@
+<!--
+  Side Menu Page
+-->
+
+<ion-menu [content]="content">
+  <ion-header no-border>
+    <ion-toolbar color="primary">
+      <ion-list class="user-profile">
+        <ion-item *ngIf="userDetail">
+            <ion-avatar item-left>
+              <img *ngIf="!userDetail.photoURL" src="assets/images/avatar_man.svg">
+              <img *ngIf="userDetail.photoURL" [src]="userDetail.photoURL">
+            </ion-avatar>
+            <div>
+              <h2>{{userDetail.name}}</h2>
+              <h4 >{{userDetail.email}}</h4>
+            </div>
+        </ion-item>
+      </ion-list>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list no-lines class="menu-list">
+      <button (click)="openPage(homePage)" ion-item>
+        <ion-icon item-left name="home"></ion-icon>
+        Home
+      </button>
+
+      <button (click)="openPage(eventFeedsPage)" ion-item>
+        <ion-icon item-left name="paper"></ion-icon>
+        Event Feeds
+      </button>
+
+      <button (click)="openPage(profilePage)" ion-item>
+        <ion-icon item-left name="contact"></ion-icon>
+        Profile
+      </button>
+
+      <button ion-item (click)="logout()">
+        <ion-icon item-left name="log-out"></ion-icon>
+        Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav id="nav" #content [root]="rootPage" [rootParams]="params"></ion-nav>
