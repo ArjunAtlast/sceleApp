@@ -11,7 +11,9 @@
 
 </ion-header>
 <ion-content padding>
-  <div *ngFor="let event of events">
-    <event-card [event]="event"></event-card>
+  <div *ngIf="events">
+    <div *ngFor="let event of events" style="margin-bottom:4px;">
+      <event-card [event]="event"></event-card>
+    </div>
   </div>
 </ion-content>

@@ -3,8 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { EventCard } from '../../components/event-card/event-card';
 
-import { Event, eventStates } from '../../api/event';
-import { UserService } from '../../providers/user-service/user-service';
+import { Event } from '../../api/event';
+import { EventService } from '../../providers/event-service/event-service';
+import { UIService } from '../../providers/ui-service/ui-service';
 
 @Component({
   selector: 'page-event-feeds',
@@ -13,47 +14,27 @@ import { UserService } from '../../providers/user-service/user-service';
 export class EventFeedsPage {
 
   //demo events
-  events:Event[] = [
-    {
-      title: 'Demo Event',
-      tagline: 'The best demo event ever!',
-      //posterURL: 'assets/images/default_cover.jpg',
-      place: 'Palakkad',
-      startDate: '2017-08-02T14:00',
-      endDate: '2017-08-02T14:00',
-      description: 'This is a demo event',
-      category: 'art',
-      state: eventStates.STARTED,
-      targetSkills: ['music','dance','acting'],
-      tags: ['demo', 'mock'],
-      owner: 'uEUHZruMPNh8MDhJm4OW2B04PhV2',
-      createdAt: new Date().toISOString(),
-    }
-  ];
+  events:Event[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private userSp: UserService
+    private eventSp: EventService,
+    private ui: UIService
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventFeedsPage');
+    this.getEventFeeds();
   }
 
-  //get user name
-  getUserDetail(userId:string):any {
-    this.userSp.getUserDetailsAsync(userId).then(snapshot => {
-      return {
-        name: snapshot.name,
-        photoURL: snapshot.photoURL || 'assets/images/avatar_man.svg'
-      };
-    }).catch(error => {
-      return false;
+  getEventFeeds() {
+    this.ui.presentLoading();
+    this.eventSp.listLatestAnnounced().then(snapshot => {
+      this.events = snapshot;
+      this.ui.dismissLoading();
     });
   }
-
-  //get user
 
 }

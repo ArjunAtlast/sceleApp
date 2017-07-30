@@ -35,6 +35,23 @@
   background: linear-gradient($angle, transparentize($color3, $t1), transparentize($color1, $t2));
 }
 
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
 @mixin custom-card($background) {
   width: 100%;
   background: $background;
@@ -134,7 +151,7 @@
           border: none;
         }
       }
-      
+
 
       ion-label.label-md, ion-label.label-ios, ion-label.label-wp {
         transition: color 0.3s ease-in-out;

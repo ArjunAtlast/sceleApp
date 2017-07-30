@@ -8,7 +8,6 @@ export class UserService {
   dbPath = "/users";
 
   constructor( public db: AngularFireDatabase) {
-
   }
 
   getUserDetailsAsync(userId: string): Promise<any> {

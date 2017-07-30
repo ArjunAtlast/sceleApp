@@ -21,3 +21,9 @@ export function renderSkills(skills: Skills): string[] {
   }
   return skillsArr;
 }
+
+export function setAllSkills(skills: Skills, value: boolean): void {
+  for(let skill in skills) {
+    skills[skill] = value;
+  }
+}

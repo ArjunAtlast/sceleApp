@@ -31,10 +31,12 @@ export class HomePage {
     this.ui.presentLoading();
     this.auth.getUserAsync().then(user => {
       this.user = user;
-      this.userSp.getUserDetailsAsync(user.uid).then(detail => {
-        this.userDetail = detail;
-        this.ui.dismissLoading();
-      });
+      return this.userSp.getUserDetailsAsync(user.uid)
+    }).then(detail => {
+      this.userDetail = detail;
+      this.ui.dismissLoading();
+    }).catch(error => {
+      this.ui.showAlert("Failed to fetch user", error.message);
     });
   }
 

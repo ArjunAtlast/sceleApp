@@ -17,4 +17,32 @@ page-create-event {
       flex: 1;
     }
   }
+
+  .poster-select {
+    width: 100%;
+    padding: 16px;
+    position: relative;
+    .poster-image-wrapper {
+      @include aspect-ratio(16,9);
+      border-radius: 2px;
+      border: 1px solid color($colors, borderColor);
+      background: color($colors, light);
+      overflow: hidden;
+    }
+
+    .poster-select-buttons {
+      position: absolute;
+      top: calc(50% - 30px);
+      left: 0px;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      display: -webkit-flex;
+      align-items: center;
+      -webkit-align-items: center;
+      justify-content: center;
+      -webkit-justify-content: center;
+      button { box-shadow: none; }
+    }
+  }
 }

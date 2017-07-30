@@ -17,14 +17,14 @@
     </div>
   </div>
   <!-- State -->
-  <div class="event-state" [ngClass]="event.state">
+  <div *ngIf="event.state!=='announced'" class="event-state" [ngClass]="event.state">
     {{event.state }}
   </div>
   <!-- Poster -->
   <div class="event-poster">
     <!-- Poster -->
     <div  class="event-poster-image">
-      <img [src]="event.posterURL || 'assets/images/default_poster.jpg'">
+      <ion-img [src]="event.posterURL || 'assets/images/default_poster.jpg'"></ion-img>
     </div>
     <!-- Title and tagline -->
     <div class="event-poster-text">
@@ -47,10 +47,14 @@
   </div>
   <!-- footer -->
   <div class="event-footer">
-    <div class="event-interests">21 interested</div>
+    <div *ngIf="interests" class="event-interests">
+      <button (click)="toggleInterest()" [color]="isInterested?'primary':'neutral'" ion-button icon-only small clear>
+        <ion-icon name="heart"></ion-icon>
+      </button> {{interests.length}} interested
+    </div>
     <div class="event-actions">
-      <button ion-button icon-only small clear>
-        <ion-icon color="default" name="heart"></ion-icon>
+      <button color="neutral" ion-button icon-only small clear>
+        <ion-icon name="more"></ion-icon>
       </button>
     </div>
   </div>

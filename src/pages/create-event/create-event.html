@@ -13,21 +13,21 @@
       <ion-list-header>
         Event Details
       </ion-list-header>
-      <ion-item>
+      <ion-item [class.invalid]="showError(createEventForm.controls.title)">
         <ion-label>
           <ion-icon item-left name="card"></ion-icon>
         </ion-label>
         <ion-input [(ngModel)]="event.title" formControlName="title" placeholder="Title"></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.tagline)">
         <ion-label>
           <ion-icon item-left name="quote"></ion-icon>
         </ion-label>
         <ion-input [(ngModel)]="event.tagline" formControlName="tagline" placeholder="Tagline(optional)"></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.website)">
         <ion-label>
           <ion-icon item-left name="globe"></ion-icon>
         </ion-label>
@@ -40,57 +40,75 @@
       <ion-list-header>
         Description
       </ion-list-header>
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.description)">
         <ion-textarea [(ngModel)]="event.description" formControlName="description" rows="5" placeholder="A Description about the event (optional).."></ion-textarea>
       </ion-item>
     </ion-list>
-    <!-- Poster -->
-    <div class="poster-select">
-
-    </div>
+    <ion-list>
+      <ion-list-header>
+        Event Poster
+      </ion-list-header>
+      <!-- Poster -->
+      <div class="poster-select">
+        <div class="poster-image-wrapper">
+          <div class="content">
+            <img *ngIf="event.posterURL" [src]="event.posterURL">
+          </div>
+        </div>
+        <div class="poster-select-buttons">
+          <button (click)="selectPosterGallery()" ion-fab mini color="success">
+            <ion-icon name="images"></ion-icon>
+          </button>
+          <button (click)="selectPosterCam()" ion-fab mini color="primary">
+            <ion-icon name="camera"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </ion-list>
     <!-- Place and Date -->
     <ion-list no-lines>
       <ion-list-header>
         Place &amp; Date
       </ion-list-header>
 
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.place)">
         <ion-label>
           <ion-icon item-left name="pin"></ion-icon>
         </ion-label>
         <ion-input [(ngModel)]="event.place" formControlName="place" placeholder="Location"></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.startDate)">
         <ion-label>
           <ion-icon item-left name="calendar"></ion-icon>
           Start Date
         </ion-label>
-        <ion-datetime [(ngModel)]="event.startDate" formControlName="startDate" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY"></ion-datetime>
+        <ion-datetime [min]="minDate" [max]="maxDate" [(ngModel)]="event.startDate" formControlName="startDate" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY"></ion-datetime>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="event.startDate"  [class.invalid]="showError(createEventForm.controls.endDate)">
         <ion-label>
           <ion-icon item-left name="calendar"></ion-icon>
           End Date
         </ion-label>
-        <ion-datetime [(ngModel)]="event.endDate" formControlName="endDate" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY"></ion-datetime>
+        <ion-datetime [min]="event.startDate || minDate" [max]="maxDate" [(ngModel)]="event.endDate" formControlName="endDate" displayFormat="DD-MM-YYYY" pickerFormat="DD MMMM YYYY"></ion-datetime>
       </ion-item>
     </ion-list>
     <!--Category and Tags-->
     <ion-list no-lines>
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.category)">
         <ion-label>
           <ion-icon item-left name="bookmarks"></ion-icon>
           Category
         </ion-label>
-        <ion-select [(ngModel)]="event.category" formControlName="category">
+        <ion-select [(ngModel)]="event.category" (ionChange)="fillTargetSkills()" formControlName="category">
           <ion-option value="art">Art</ion-option>
           <ion-option value="sport">Sport</ion-option>
           <ion-option value="technical">Technical</ion-option>
+          <ion-option value="other">Other</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
+      <ion-item  [class.invalid]="showError(createEventForm.controls.tags)">
         <ion-label>
           <ion-icon item-left name="pricetags"></ion-icon>
           Tags
@@ -106,8 +124,8 @@
         Target Skills
       </ion-list-header>
       <ion-item>
-        <ion-label>All</ion-label>
-        <ion-checkbox></ion-checkbox>
+        <ion-label>Select All</ion-label>
+        <ion-checkbox [(ngModel)]="allSkills" [ngModelOptions]="{standalone: true}" (ionChange)="selectAll()"></ion-checkbox>
       </ion-item>
       <ion-item-group>
         <ion-item-divider color="dark">
@@ -150,25 +168,25 @@
         <!-- Athletics -->
         <ion-item>
           <ion-label>Athletics</ion-label>
-          <ion-checkbox  [(ngModel)]="targetSkills.athletics" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox  [(ngModel)]="targetSkills.athletics" [ngModelOptions]="{standalone: true}" [disabled]="allSkills"></ion-checkbox>
         </ion-item>
 
         <!-- Games -->
         <ion-item>
           <ion-label>Games</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.games" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.games" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
 
         <!-- Endurance -->
         <ion-item>
           <ion-label>Strength / Endurance</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.endurance" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.endurance" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
 
         <!-- Coordination -->
         <ion-item>
           <ion-label>Balance &amp; Coordination</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.coordination" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.coordination" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
 
       </ion-item-group>
@@ -182,28 +200,28 @@
         <!-- Designing -->
         <ion-item>
           <ion-label>Designing</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.designing" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.designing" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
         <!-- Programmisng -->
         <ion-item>
           <ion-label>Programming</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.programming" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.programming" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
         <!-- Data Analysis -->
         <ion-item>
           <ion-label>Data Analysis</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.data_analysis" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.data_analysis" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
         <!-- Technical Writing -->
         <ion-item>
           <ion-label>Technical Writing</ion-label>
-          <ion-checkbox [(ngModel)]="targetSkills.technical_writing" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="targetSkills.technical_writing" [ngModelOptions]="{standalone: true}"  [disabled]="allSkills"></ion-checkbox>
         </ion-item>
       </ion-item-group>
     </ion-list>
   </form>
-  <ion-fab right bottom>
-    <button ion-fab [disabled]="!createEventForm.valid">
+  <ion-fab *ngIf="createEventForm.valid" right bottom>
+    <button (click)="createEvent()" ion-fab [disabled]="!createEventForm.valid">
       <ion-icon name="done-all"></ion-icon>
     </button>
   </ion-fab>
